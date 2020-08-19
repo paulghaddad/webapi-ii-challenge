@@ -4,23 +4,26 @@ const commentsRouter = require('../comments/commentsRouter')
 const postsRouter = express.Router()
 
 postsRouter.get('/', (req, res) => {
-  res.send('GET /api/posts')
+  return res.status(200).json({ posts: [] })
 })
 
 postsRouter.get('/:postId', (req, res) => {
-  res.send('GET /api/posts/:id')
+  return res.status(200).json({ post: {} })
 })
 
 postsRouter.post('/', (req, res) => {
-  res.send('POST /api/posts')
+  if (!req.body.title || !req.body.contents)
+    return res.status(400).json({ message: "Please provide title and contents for the post." })
+
+  res.status(201).json({post: 'created'})
 })
 
 postsRouter.put('/:postId', (req, res) => {
-  res.send('PUT /api/posts/:id')
+  return res.status(200).json({ post: {} })
 })
 
 postsRouter.delete('/:postId', (req, res) => {
-  res.send('DELETE /api/posts/:id')
+  return res.sendStatus(204)
 })
 
 postsRouter.use('/:postId/comments', commentsRouter)
