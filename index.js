@@ -10,8 +10,13 @@ const postsRouter = require('./resources/posts/postsRouter')
 
 const apiRouter = express.Router()
 
-app.use('/api', apiRouter)
+const loggingMiddleware = (req, res, next) => {
+  console.log(`${req.method} request made to endpoint: ${req.path}`)
+  next()
+}
 
+app.use(loggingMiddleware)
+app.use('/api', apiRouter)
 apiRouter.use('/posts', postsRouter)
 
 app.listen(port, () => {
