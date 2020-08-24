@@ -14,6 +14,9 @@ module.exports = {
 };
 
 function find() {
+  const query = db('posts')
+
+  return query.then(posts => posts)
 }
 
 function findById(id) {

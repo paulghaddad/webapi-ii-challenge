@@ -1,10 +1,17 @@
 const express = require('express')
-const commentsRouter = require('../comments/commentsRouter')
+const db = require('../data/db')
+const commentsRouter = require('./commentsRouter')
 
 const postsRouter = express.Router()
 
 postsRouter.get('/', (req, res) => {
-  return res.status(200).json({ posts: [] })
+  db.find()
+  .then(posts => {
+    return res.status(200).json({ posts: posts })
+  })
+  .catch(err => {
+    return res.status(500).json({error: 'The posts information could not be retrieved.'})
+  })
 })
 
 postsRouter.get('/:postId', (req, res) => {
