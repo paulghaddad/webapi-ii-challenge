@@ -20,15 +20,21 @@ function find() {
 }
 
 function findById(id) {
+  const query = db('posts').where({id: id})
+
+  return query.then(posts => posts[0])
 }
 
-function insert(post) {
+function insert(postData) {
+  return db('posts').insert(postData)
 }
 
-function update(id, post) {
+function update(id, postData) {
+  return db('posts').where({id: id}).update({id, ...postData})
 }
 
 function remove(id) {
+  return db('posts').where({id: id}).del()
 }
 
 function findPostComments(postId) {
